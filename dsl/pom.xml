@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.programyourhome.adventureroom.philipshue</groupId>
+        <artifactId>parent</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+    <artifactId>dsl</artifactId>
+    
+    <build>
+		<plugins>
+			<plugin>
+				<groupId>org.antlr</groupId>
+				<artifactId>antlr4-maven-plugin</artifactId>
+				<version>4.7.1</version>
+				<executions>
+					<execution>
+						<id>antlr</id>
+						<goals>
+							<goal>antlr4</goal>
+						</goals>
+					</execution>
+				</executions>
+				<!-- TODO: Resolve imports can be handy, but then we need to copy the g4 files with tokens from base dsl into 
+				     some target folder and our own g4 file as well and run from there with that target folder as lib dir -->
+				<!-- TODO: configure Eclipse to use 4-spaces instead of tabs -->
+				<configuration>
+					<libDirectory>src/main/antlr4/com/programyourhome/adventureroom/philipshue/dsl</libDirectory>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+    
+    <dependencies>
+    	<dependency>
+    		<groupId>com.programyourhome.adventureroom</groupId>
+    		<artifactId>dsl</artifactId>
+    		<version>0.0.2-SNAPSHOT</version>
+    	</dependency>
+    	<dependency>
+    		<groupId>${project.groupId}</groupId>
+    		<artifactId>model</artifactId>
+    		<version>0.0.1-SNAPSHOT</version>
+    	</dependency>
+    </dependencies>
+</project>
