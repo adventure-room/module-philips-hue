@@ -1,4 +1,4 @@
-package com.programyourhome.adventureroom.hue.model;
+package com.programyourhome.adventureroom.philipshue.service.model;
 
 import com.philips.lighting.hue.sdk.utilities.impl.Color;
 

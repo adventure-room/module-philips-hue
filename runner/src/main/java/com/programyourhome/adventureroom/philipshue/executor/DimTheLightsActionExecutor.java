@@ -1,7 +1,7 @@
 package com.programyourhome.adventureroom.philipshue.executor;
 
-import com.programyourhome.adventureroom.hue.PhilipsHue;
 import com.programyourhome.adventureroom.philipshue.model.DimTheLightsAction;
+import com.programyourhome.adventureroom.philipshue.service.PhilipsHue;
 import com.programyourhome.iotadventure.runner.context.ExecutionContext;
 
 public class DimTheLightsActionExecutor extends AbstractPhilipsHueExecutor<DimTheLightsAction> {

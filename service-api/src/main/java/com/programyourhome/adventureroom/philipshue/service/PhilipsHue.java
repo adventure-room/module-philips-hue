@@ -1,11 +1,11 @@
-package com.programyourhome.adventureroom.hue;
+package com.programyourhome.adventureroom.philipshue.service;
 
 import java.awt.Color;
 import java.util.Collection;
 
-import com.programyourhome.adventureroom.hue.model.HueLight;
-import com.programyourhome.adventureroom.hue.model.Mood;
-import com.programyourhome.adventureroom.hue.model.SmartPlug;
+import com.programyourhome.adventureroom.philipshue.service.model.HueLight;
+import com.programyourhome.adventureroom.philipshue.service.model.Mood;
+import com.programyourhome.adventureroom.philipshue.service.model.SmartPlug;
 
 public interface PhilipsHue {
 

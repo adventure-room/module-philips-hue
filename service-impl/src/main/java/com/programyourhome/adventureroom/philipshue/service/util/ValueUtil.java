@@ -1,4 +1,4 @@
-package com.programyourhome.adventureroom.hue.util;
+package com.programyourhome.adventureroom.philipshue.service.util;
 
 public class ValueUtil {
 

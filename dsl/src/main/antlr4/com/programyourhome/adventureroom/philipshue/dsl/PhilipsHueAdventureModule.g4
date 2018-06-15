@@ -1,9 +1,9 @@
 grammar PhilipsHueAdventureModule;
 
-action: dimTheLightsAction | someOtherAction;
+action: dimTheLightsAction | turnOffLightsAction;
 
 dimTheLightsAction: 'dim the lights to ' NUM;
 
-someOtherAction: 'currently undefined';
+turnOffLightsAction: 'turn off the lights';
 
 NUM: [0-9]+;

@@ -1,13 +1,13 @@
-package com.programyourhome.adventureroom.hue;
+package com.programyourhome.adventureroom.philipshue.service;
 
 import java.awt.Color;
 
 import com.philips.lighting.hue.sdk.utilities.PHUtilities;
 import com.philips.lighting.model.PHLight;
 import com.philips.lighting.model.PHLight.PHLightColorMode;
+import com.programyourhome.adventureroom.philipshue.service.model.Mood;
+import com.programyourhome.adventureroom.philipshue.service.util.ValueUtil;
 import com.philips.lighting.model.PHLightState;
-import com.programyourhome.adventureroom.hue.model.Mood;
-import com.programyourhome.adventureroom.hue.util.ValueUtil;
 
 public class PHLightStateBuilder {
 

@@ -1,4 +1,4 @@
-package com.programyourhome.adventureroom.hue;
+package com.programyourhome.adventureroom.philipshue.service;
 
 import java.awt.Color;
 import java.util.Collection;
@@ -9,12 +9,12 @@ import com.philips.lighting.hue.sdk.PHHueSDK;
 import com.philips.lighting.model.PHBridge;
 import com.philips.lighting.model.PHBridgeResourcesCache;
 import com.philips.lighting.model.PHLight;
-import com.programyourhome.adventureroom.hue.model.HueLight;
-import com.programyourhome.adventureroom.hue.model.HueLightImpl;
-import com.programyourhome.adventureroom.hue.model.LightType;
-import com.programyourhome.adventureroom.hue.model.Mood;
-import com.programyourhome.adventureroom.hue.model.SmartPlug;
-import com.programyourhome.adventureroom.hue.model.SmartPlugImpl;
+import com.programyourhome.adventureroom.philipshue.service.model.HueLight;
+import com.programyourhome.adventureroom.philipshue.service.model.HueLightImpl;
+import com.programyourhome.adventureroom.philipshue.service.model.LightType;
+import com.programyourhome.adventureroom.philipshue.service.model.Mood;
+import com.programyourhome.adventureroom.philipshue.service.model.SmartPlug;
+import com.programyourhome.adventureroom.philipshue.service.model.SmartPlugImpl;
 
 public class PhilipsHueImpl implements PhilipsHue {
 

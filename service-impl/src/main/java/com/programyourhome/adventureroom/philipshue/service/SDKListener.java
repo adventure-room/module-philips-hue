@@ -1,4 +1,4 @@
-package com.programyourhome.adventureroom.hue;
+package com.programyourhome.adventureroom.philipshue.service;
 
 import java.util.List;
 import java.util.Map;

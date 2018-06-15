@@ -3,10 +3,10 @@ package com.programyourhome.adventureroom.philipshue.module;
 import java.util.ServiceLoader;
 
 import com.programyourhome.adventureroom.dsl.antlr.AbstractAntlrDslAdventureModule;
-import com.programyourhome.adventureroom.hue.PhilipsHue;
 import com.programyourhome.adventureroom.model.resource.ResourceDescriptor;
 import com.programyourhome.adventureroom.philipshue.model.resources.lights.Light;
 import com.programyourhome.adventureroom.philipshue.model.resources.plugs.Plug;
+import com.programyourhome.adventureroom.philipshue.service.PhilipsHue;
 
 public class PhilipsHueAdventureModule extends AbstractAntlrDslAdventureModule {
 

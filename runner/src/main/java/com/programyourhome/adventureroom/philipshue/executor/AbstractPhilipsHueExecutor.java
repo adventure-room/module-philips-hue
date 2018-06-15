@@ -1,8 +1,8 @@
 package com.programyourhome.adventureroom.philipshue.executor;
 
-import com.programyourhome.adventureroom.hue.PhilipsHue;
 import com.programyourhome.adventureroom.model.script.action.Action;
 import com.programyourhome.adventureroom.philipshue.module.PhilipsHueAdventureModule;
+import com.programyourhome.adventureroom.philipshue.service.PhilipsHue;
 import com.programyourhome.iotadventure.runner.action.executor.ActionExecutor;
 import com.programyourhome.iotadventure.runner.context.ExecutionContext;
 

@@ -1,4 +1,4 @@
-package com.programyourhome.adventureroom.hue.model;
+package com.programyourhome.adventureroom.philipshue.service.model;
 
 public class SmartPlugImpl implements SmartPlug {
 

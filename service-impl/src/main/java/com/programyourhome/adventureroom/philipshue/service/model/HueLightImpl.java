@@ -1,8 +1,8 @@
-package com.programyourhome.adventureroom.hue.model;
+package com.programyourhome.adventureroom.philipshue.service.model;
 
 import com.philips.lighting.hue.sdk.utilities.PHUtilities;
 import com.philips.lighting.model.PHLight;
-import com.programyourhome.adventureroom.hue.util.ValueUtil;
+import com.programyourhome.adventureroom.philipshue.service.util.ValueUtil;
 
 public class HueLightImpl implements HueLight {
 
