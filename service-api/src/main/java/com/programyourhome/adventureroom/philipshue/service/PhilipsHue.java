@@ -1,8 +1,8 @@
 package com.programyourhome.adventureroom.philipshue.service;
 
-import java.awt.Color;
 import java.util.Collection;
 
+import com.programyourhome.adventureroom.philipshue.service.model.ColorRGB;
 import com.programyourhome.adventureroom.philipshue.service.model.HueLight;
 import com.programyourhome.adventureroom.philipshue.service.model.Mood;
 import com.programyourhome.adventureroom.philipshue.service.model.SmartPlug;
@@ -23,6 +23,11 @@ public interface PhilipsHue {
      * @return connected (true) or not (false)
      */
     public boolean isConnectedToBridge();
+
+    /**
+     * Disconnect from the bridge.
+     */
+    public void disconnectFromBridge();
 
     /**
      * Returns all lights that are connected to the Hue Bridge.
@@ -97,7 +102,7 @@ public interface PhilipsHue {
      * @param lightId the id of the light
      * @param color the color
      */
-    public void setColorRGB(int lightId, Color color);
+    public void setColorRGB(int lightId, ColorRGB color);
 
     /**
      * Set the color of this light to the specified point x, y in the CIE 1931 color space
@@ -163,7 +168,7 @@ public interface PhilipsHue {
      * @see dim
      * @see setColorRGB
      */
-    public void dimToColorRGB(int lightId, int dimBasisPoints, Color color);
+    public void dimToColorRGB(int lightId, int dimBasisPoints, ColorRGB color);
 
     /**
      * Combination of dimming the light and setting it's color XY.

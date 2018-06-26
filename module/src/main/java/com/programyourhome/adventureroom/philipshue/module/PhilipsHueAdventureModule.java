@@ -1,14 +1,21 @@
 package com.programyourhome.adventureroom.philipshue.module;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.ServiceLoader;
 
-import com.programyourhome.adventureroom.dsl.antlr.AbstractAntlrDslAdventureModule;
+import com.programyourhome.adventureroom.dsl.regex.AbstractRegexDslAdventureModule;
+import com.programyourhome.adventureroom.dsl.regex.RegexActionConverter;
 import com.programyourhome.adventureroom.model.resource.ResourceDescriptor;
+import com.programyourhome.adventureroom.philipshue.dsl.converters.ColorLightActionConverter;
+import com.programyourhome.adventureroom.philipshue.dsl.converters.DimLightsActionConverter;
+import com.programyourhome.adventureroom.philipshue.dsl.converters.TurnOffLightsActionConverter;
+import com.programyourhome.adventureroom.philipshue.model.resources.colors.ColorRGB;
 import com.programyourhome.adventureroom.philipshue.model.resources.lights.Light;
 import com.programyourhome.adventureroom.philipshue.model.resources.plugs.Plug;
 import com.programyourhome.adventureroom.philipshue.service.PhilipsHue;
 
-public class PhilipsHueAdventureModule extends AbstractAntlrDslAdventureModule {
+public class PhilipsHueAdventureModule extends AbstractRegexDslAdventureModule {
 
     public static final String ID = "philipshue";
 
@@ -16,7 +23,6 @@ public class PhilipsHueAdventureModule extends AbstractAntlrDslAdventureModule {
     private PhilipsHueConfig config;
 
     public PhilipsHueAdventureModule() {
-        super("PhilipsHue");
         // We assume there will be one implementation available on the classpath. If not, behavior is undefined.
         ServiceLoader.load(PhilipsHue.class).forEach(impl -> this.philipsHue = impl);
         this.initConfig();
@@ -28,19 +34,25 @@ public class PhilipsHueAdventureModule extends AbstractAntlrDslAdventureModule {
         this.config.name = "Philips Hue";
         this.config.description = "Module to control Philips Hue devices";
 
-        ResourceDescriptor lightsDescriptor = new ResourceDescriptor();
+        ResourceDescriptor<Light> lightsDescriptor = new ResourceDescriptor<>();
         lightsDescriptor.id = "lights";
         lightsDescriptor.name = "Hue Light Bulbs";
         lightsDescriptor.clazz = Light.class;
-        this.config.resourceDescriptors.put(lightsDescriptor.getId(), lightsDescriptor);
+        this.config.addResourceDescriptor(lightsDescriptor);
 
-        ResourceDescriptor plugsDescriptor = new ResourceDescriptor();
+        ResourceDescriptor<Plug> plugsDescriptor = new ResourceDescriptor<>();
         plugsDescriptor.id = "plugs";
         plugsDescriptor.name = "Hue Compatible socket plugs";
         plugsDescriptor.clazz = Plug.class;
-        this.config.resourceDescriptors.put(plugsDescriptor.getId(), plugsDescriptor);
+        this.config.addResourceDescriptor(plugsDescriptor);
 
-        this.config.deamons.put("Hue SDK", () -> this.philipsHue.connectToBridge(this.config.bridgeHost, this.config.bridgeUsername));
+        ResourceDescriptor<ColorRGB> colorsDescriptor = new ResourceDescriptor<>();
+        colorsDescriptor.id = "colors";
+        colorsDescriptor.name = "RGB Colors";
+        colorsDescriptor.clazz = ColorRGB.class;
+        this.config.addResourceDescriptor(colorsDescriptor);
+
+        this.config.addTask("Hue SDK", () -> this.philipsHue.connectToBridge(this.config.bridgeHost, this.config.bridgeUsername));
     }
 
     public PhilipsHue getPhilipsHue() {
@@ -50,6 +62,18 @@ public class PhilipsHueAdventureModule extends AbstractAntlrDslAdventureModule {
     @Override
     public PhilipsHueConfig getConfig() {
         return this.config;
+    }
+
+    @Override
+    protected Collection<RegexActionConverter<?>> getRegexActionConverters() {
+        return Arrays.asList(new DimLightsActionConverter(),
+                new ColorLightActionConverter(),
+                new TurnOffLightsActionConverter());
+    }
+
+    @Override
+    public void stop() {
+        this.philipsHue.disconnectFromBridge();
     }
 
 }

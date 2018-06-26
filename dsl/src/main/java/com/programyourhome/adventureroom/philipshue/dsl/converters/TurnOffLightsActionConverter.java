@@ -1,14 +1,18 @@
 package com.programyourhome.adventureroom.philipshue.dsl.converters;
 
-import com.programyourhome.adventureroom.dsl.antlr.AntlrActionConverter;
+import com.programyourhome.adventureroom.dsl.regex.MatchResult;
 import com.programyourhome.adventureroom.model.Adventure;
-import com.programyourhome.adventureroom.philipshue.dsl.PhilipsHueAdventureModuleParser.TurnOffLightsActionContext;
 import com.programyourhome.adventureroom.philipshue.model.TurnOffLightsAction;
 
-public class TurnOffLightsActionConverter implements AntlrActionConverter<TurnOffLightsActionContext, TurnOffLightsAction> {
+public class TurnOffLightsActionConverter extends AbstractPhilipsHueActionConverter<TurnOffLightsAction> {
 
     @Override
-    public TurnOffLightsAction convert(TurnOffLightsActionContext context, Adventure adventure) {
+    public String getRegexLine() {
+        return "turn off the lights";
+    }
+
+    @Override
+    public TurnOffLightsAction convert(MatchResult matchResult, Adventure adventure) {
         return new TurnOffLightsAction();
     }
 

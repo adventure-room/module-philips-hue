@@ -1,13 +1,12 @@
 package com.programyourhome.adventureroom.philipshue.service;
 
-import java.awt.Color;
-
 import com.philips.lighting.hue.sdk.utilities.PHUtilities;
 import com.philips.lighting.model.PHLight;
 import com.philips.lighting.model.PHLight.PHLightColorMode;
+import com.philips.lighting.model.PHLightState;
+import com.programyourhome.adventureroom.philipshue.service.model.ColorRGB;
 import com.programyourhome.adventureroom.philipshue.service.model.Mood;
 import com.programyourhome.adventureroom.philipshue.service.util.ValueUtil;
-import com.philips.lighting.model.PHLightState;
 
 public class PHLightStateBuilder {
 
@@ -50,7 +49,7 @@ public class PHLightStateBuilder {
         return this;
     }
 
-    public PHLightStateBuilder colorRGB(final Color color) {
+    public PHLightStateBuilder colorRGB(final ColorRGB color) {
         final float[] xy = PHUtilities.calculateXYFromRGB(color.getRed(), color.getGreen(), color.getBlue(), this.phLight.getModelNumber());
         return this.colorXY(xy[0], xy[1]);
     }

@@ -1,6 +1,5 @@
 package com.programyourhome.adventureroom.philipshue.service;
 
-import java.awt.Color;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
@@ -9,6 +8,7 @@ import com.philips.lighting.hue.sdk.PHHueSDK;
 import com.philips.lighting.model.PHBridge;
 import com.philips.lighting.model.PHBridgeResourcesCache;
 import com.philips.lighting.model.PHLight;
+import com.programyourhome.adventureroom.philipshue.service.model.ColorRGB;
 import com.programyourhome.adventureroom.philipshue.service.model.HueLight;
 import com.programyourhome.adventureroom.philipshue.service.model.HueLightImpl;
 import com.programyourhome.adventureroom.philipshue.service.model.LightType;
@@ -21,31 +21,6 @@ public class PhilipsHueImpl implements PhilipsHue {
     private PHHueSDK sdk;
     private PHAccessPoint accessPoint;
     private SDKListener sdkListener;
-
-    private PHBridge getBridge() {
-        return this.sdk.getSelectedBridge();
-    }
-
-    private PHBridgeResourcesCache getCache() {
-        return this.getBridge().getResourceCache();
-    }
-
-    private PHLight getPHLight(final int lightId) {
-        return this.getCache().getAllLights().stream()
-                .filter(phLight -> phLight.getIdentifier().equals(Integer.toString(lightId)))
-                .findFirst()
-                .get();
-    }
-
-    private Collection<HueLight> getAllLights() {
-        return this.getCache().getAllLights().stream()
-                .map(HueLightImpl::new)
-                .collect(Collectors.toList());
-    }
-
-    private void switchLight(final int lightId, final boolean on) {
-        this.applyNewState(new PHLightStateBuilder(this.getPHLight(lightId), on));
-    }
 
     @Override
     public void connectToBridge(String host, String username) {
@@ -66,6 +41,12 @@ public class PhilipsHueImpl implements PhilipsHue {
     @Override
     public boolean isConnectedToBridge() {
         return this.sdk.isAccessPointConnected(this.accessPoint);
+    }
+
+    @Override
+    public void disconnectFromBridge() {
+        this.sdk.disconnect(this.getBridge());
+        this.sdk.destroySDK();
     }
 
     @Override
@@ -123,7 +104,7 @@ public class PhilipsHueImpl implements PhilipsHue {
     }
 
     @Override
-    public void setColorRGB(final int lightId, final Color color) {
+    public void setColorRGB(final int lightId, final ColorRGB color) {
         this.applyNewState(this.createBuilder(lightId)
                 .colorRGB(color));
     }
@@ -153,7 +134,7 @@ public class PhilipsHueImpl implements PhilipsHue {
     }
 
     @Override
-    public void dimToColorRGB(final int lightId, final int dimBasisPoints, final Color color) {
+    public void dimToColorRGB(final int lightId, final int dimBasisPoints, final ColorRGB color) {
         this.applyNewState(this.createBuilder(lightId)
                 .dim(dimBasisPoints)
                 .colorRGB(color));
@@ -185,6 +166,31 @@ public class PhilipsHueImpl implements PhilipsHue {
         this.applyNewState(this.createBuilder(lightId)
                 .dim(dimBasisPoints)
                 .mood(mood));
+    }
+
+    private PHBridge getBridge() {
+        return this.sdk.getSelectedBridge();
+    }
+
+    private PHBridgeResourcesCache getCache() {
+        return this.getBridge().getResourceCache();
+    }
+
+    private PHLight getPHLight(final int lightId) {
+        return this.getCache().getAllLights().stream()
+                .filter(phLight -> phLight.getIdentifier().equals(Integer.toString(lightId)))
+                .findFirst()
+                .get();
+    }
+
+    private Collection<HueLight> getAllLights() {
+        return this.getCache().getAllLights().stream()
+                .map(HueLightImpl::new)
+                .collect(Collectors.toList());
+    }
+
+    private void switchLight(final int lightId, final boolean on) {
+        this.applyNewState(new PHLightStateBuilder(this.getPHLight(lightId), on));
     }
 
 }
