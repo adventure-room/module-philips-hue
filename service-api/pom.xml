@@ -8,5 +8,4 @@
         <version>0.0.2-SNAPSHOT</version>
     </parent>
     <artifactId>service-api</artifactId>
-    
 </project>
