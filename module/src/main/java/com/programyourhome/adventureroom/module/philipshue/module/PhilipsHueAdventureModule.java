@@ -6,6 +6,7 @@ import java.util.ServiceLoader;
 
 import com.programyourhome.adventureroom.dsl.regex.AbstractRegexDslAdventureModule;
 import com.programyourhome.adventureroom.dsl.regex.RegexActionConverter;
+import com.programyourhome.adventureroom.model.Adventure;
 import com.programyourhome.adventureroom.model.resource.ResourceDescriptor;
 import com.programyourhome.adventureroom.module.philipshue.dsl.converters.ColorLightActionConverter;
 import com.programyourhome.adventureroom.module.philipshue.dsl.converters.DimLightsActionConverter;
@@ -55,6 +56,11 @@ public class PhilipsHueAdventureModule extends AbstractRegexDslAdventureModule {
         this.config.addTask("Hue SDK", () -> this.philipsHue.connectToBridge(this.config.bridgeHost, this.config.bridgeUsername));
     }
 
+    @Override
+    public void start(Adventure adventure) {
+        // No start actions needed.
+    }
+
     public PhilipsHue getPhilipsHue() {
         return this.philipsHue;
     }
@@ -72,7 +78,7 @@ public class PhilipsHueAdventureModule extends AbstractRegexDslAdventureModule {
     }
 
     @Override
-    public void stop() {
+    public void stop(Adventure adventure) {
         this.philipsHue.disconnectFromBridge();
     }
 
