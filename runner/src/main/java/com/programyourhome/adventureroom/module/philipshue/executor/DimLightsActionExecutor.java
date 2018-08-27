@@ -9,7 +9,7 @@ public class DimLightsActionExecutor extends AbstractPhilipsHueExecutor<DimLight
     @Override
     public void execute(DimLightsAction action, ExecutionContext context) {
         PhilipsHue philipsHue = this.getPhilipsHue(context);
-        philipsHue.getLights().forEach(light -> philipsHue.dim(light.getId(), action.basisPoints));
+        action.lights.forEach(light -> philipsHue.dim(light.idInBridge, action.basisPoints));
     }
 
 }

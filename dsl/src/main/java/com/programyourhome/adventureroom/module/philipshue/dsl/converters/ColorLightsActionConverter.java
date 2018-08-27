@@ -6,7 +6,7 @@ import com.programyourhome.adventureroom.module.philipshue.model.ColorLightActio
 import com.programyourhome.adventureroom.module.philipshue.model.resources.colors.ColorRGB;
 import com.programyourhome.adventureroom.module.philipshue.model.resources.lights.Light;
 
-public class ColorLightActionConverter extends AbstractPhilipsHueActionConverter<ColorLightAction> {
+public class ColorLightsActionConverter extends AbstractPhilipsHueActionConverter<ColorLightAction> {
 
     @Override
     public String getRegexLine() {
