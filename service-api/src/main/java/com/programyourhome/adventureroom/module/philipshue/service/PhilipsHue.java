@@ -2,7 +2,7 @@ package com.programyourhome.adventureroom.module.philipshue.service;
 
 import java.util.Collection;
 
-import com.programyourhome.adventureroom.module.philipshue.service.model.ColorRGB;
+import com.programyourhome.adventureroom.module.philipshue.model.resources.colors.ColorRGB;
 import com.programyourhome.adventureroom.module.philipshue.service.model.HueLight;
 import com.programyourhome.adventureroom.module.philipshue.service.model.Mood;
 import com.programyourhome.adventureroom.module.philipshue.service.model.SmartPlug;

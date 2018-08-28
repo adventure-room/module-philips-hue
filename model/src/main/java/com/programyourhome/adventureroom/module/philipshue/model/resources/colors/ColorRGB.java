@@ -5,8 +5,30 @@ import com.programyourhome.adventureroom.model.resource.Resource;
 
 public class ColorRGB extends AbstractDescribable implements Resource {
 
-    public int red;
-    public int green;
-    public int blue;
+    private int red;
+    private int green;
+    private int blue;
+
+    @SuppressWarnings("unused")
+    private ColorRGB() {
+    }
+
+    public ColorRGB(int red, int green, int blue) {
+        this.red = red;
+        this.green = green;
+        this.blue = blue;
+    }
+
+    public int getRed() {
+        return this.red;
+    }
+
+    public int getGreen() {
+        return this.green;
+    }
+
+    public int getBlue() {
+        return this.blue;
+    }
 
 }

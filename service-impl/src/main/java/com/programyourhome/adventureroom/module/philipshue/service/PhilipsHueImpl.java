@@ -8,7 +8,7 @@ import com.philips.lighting.hue.sdk.PHHueSDK;
 import com.philips.lighting.model.PHBridge;
 import com.philips.lighting.model.PHBridgeResourcesCache;
 import com.philips.lighting.model.PHLight;
-import com.programyourhome.adventureroom.module.philipshue.service.model.ColorRGB;
+import com.programyourhome.adventureroom.module.philipshue.model.resources.colors.ColorRGB;
 import com.programyourhome.adventureroom.module.philipshue.service.model.HueLight;
 import com.programyourhome.adventureroom.module.philipshue.service.model.HueLightImpl;
 import com.programyourhome.adventureroom.module.philipshue.service.model.LightType;

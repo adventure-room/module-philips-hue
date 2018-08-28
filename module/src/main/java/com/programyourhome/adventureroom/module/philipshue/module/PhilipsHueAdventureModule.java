@@ -8,7 +8,7 @@ import com.programyourhome.adventureroom.dsl.regex.AbstractRegexDslAdventureModu
 import com.programyourhome.adventureroom.dsl.regex.RegexActionConverter;
 import com.programyourhome.adventureroom.model.Adventure;
 import com.programyourhome.adventureroom.model.resource.ResourceDescriptor;
-import com.programyourhome.adventureroom.module.philipshue.dsl.converters.ColorLightActionConverter;
+import com.programyourhome.adventureroom.module.philipshue.dsl.converters.ColorLightsActionConverter;
 import com.programyourhome.adventureroom.module.philipshue.dsl.converters.DimLightsActionConverter;
 import com.programyourhome.adventureroom.module.philipshue.dsl.converters.TurnOffLightsActionConverter;
 import com.programyourhome.adventureroom.module.philipshue.model.resources.colors.ColorRGB;
@@ -73,7 +73,7 @@ public class PhilipsHueAdventureModule extends AbstractRegexDslAdventureModule {
     @Override
     protected Collection<RegexActionConverter<?>> getRegexActionConverters() {
         return Arrays.asList(new DimLightsActionConverter(),
-                new ColorLightActionConverter(),
+                new ColorLightsActionConverter(),
                 new TurnOffLightsActionConverter());
     }
 

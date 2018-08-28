@@ -1,9 +1,9 @@
 package com.programyourhome.adventureroom.module.philipshue.service.model;
 
 import com.philips.lighting.hue.sdk.utilities.PHUtilities;
+import com.philips.lighting.hue.sdk.utilities.impl.Color;
 import com.philips.lighting.model.PHLight;
-import com.programyourhome.adventureroom.module.philipshue.service.model.HueLight;
-import com.programyourhome.adventureroom.module.philipshue.service.model.LightType;
+import com.programyourhome.adventureroom.module.philipshue.model.resources.colors.ColorRGB;
 import com.programyourhome.adventureroom.module.philipshue.service.util.ValueUtil;
 
 public class HueLightImpl implements HueLight {
@@ -16,7 +16,7 @@ public class HueLightImpl implements HueLight {
     private final Integer hue;
     private final Integer saturation;
     private final Integer colorTemperature;
-    private ColorRGBImpl colorRGB;
+    private ColorRGB colorRGB;
 
     public HueLightImpl(final PHLight phLight) {
         this.id = Integer.parseInt(phLight.getIdentifier());
@@ -34,7 +34,8 @@ public class HueLightImpl implements HueLight {
             final float[] points = new float[2];
             points[0] = phLight.getLastKnownLightState().getX();
             points[1] = phLight.getLastKnownLightState().getY();
-            this.colorRGB = new ColorRGBImpl(PHUtilities.colorFromXY(points, phLight.getModelNumber()));
+            int philipsHueColor = PHUtilities.colorFromXY(points, phLight.getModelNumber());
+            this.colorRGB = new ColorRGB(Color.red(philipsHueColor), Color.green(philipsHueColor), Color.blue(philipsHueColor));
         }
     }
 
@@ -79,7 +80,7 @@ public class HueLightImpl implements HueLight {
     }
 
     @Override
-    public ColorRGBImpl getColorRGB() {
+    public ColorRGB getColorRGB() {
         return this.colorRGB;
     }
 

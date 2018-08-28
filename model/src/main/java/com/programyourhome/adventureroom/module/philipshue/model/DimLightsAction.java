@@ -7,7 +7,7 @@ import com.programyourhome.adventureroom.module.philipshue.model.resources.light
 
 public class DimLightsAction implements Action {
 
-    public Collection<Light> lights;
     public int basisPoints;
+    public Collection<Light> lights;
 
 }
