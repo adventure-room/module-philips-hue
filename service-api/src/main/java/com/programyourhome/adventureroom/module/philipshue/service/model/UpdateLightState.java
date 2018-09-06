@@ -1,4 +1,4 @@
-package com.programyourhome.adventureroom.module.philipshue.model.service;
+package com.programyourhome.adventureroom.module.philipshue.service.model;
 
 public interface UpdateLightState {
 

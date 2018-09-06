@@ -1,9 +1,6 @@
 package com.programyourhome.adventureroom.module.philipshue.service.model;
 
 import com.programyourhome.adventureroom.module.philipshue.model.resources.colors.ColorRgb;
-import com.programyourhome.adventureroom.module.philipshue.model.service.Mood;
-import com.programyourhome.adventureroom.module.philipshue.model.service.UpdateLightState;
-import com.programyourhome.adventureroom.module.philipshue.model.service.UpdateLightStateBuilder;
 import com.programyourhome.adventureroom.module.philipshue.service.model.HueLightStateImpl.Builder;
 import com.programyourhome.adventureroom.module.philipshue.service.util.ValueUtil;
 

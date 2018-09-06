@@ -1,4 +1,4 @@
-package com.programyourhome.adventureroom.module.philipshue.model.service;
+package com.programyourhome.adventureroom.module.philipshue.service.model;
 
 /**
  * The Hue Light interface has the static properties and a state.

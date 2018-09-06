@@ -1,8 +1,5 @@
 package com.programyourhome.adventureroom.module.philipshue.service.model;
 
-import com.programyourhome.adventureroom.module.philipshue.model.service.HueLightState;
-import com.programyourhome.adventureroom.module.philipshue.model.service.UpdateLightState;
-
 public class UpdateLightStateImpl implements UpdateLightState {
 
     private final HueLightState newState;

@@ -1,9 +1,6 @@
 package com.programyourhome.adventureroom.module.philipshue.service.model;
 
 import com.philips.lighting.model.PHLight;
-import com.programyourhome.adventureroom.module.philipshue.model.service.HueLight;
-import com.programyourhome.adventureroom.module.philipshue.model.service.HueLightState;
-import com.programyourhome.adventureroom.module.philipshue.model.service.HueLightType;
 
 /**
  * For more details on the meaning of the properties, see the UpdateLightStateBuilder class.

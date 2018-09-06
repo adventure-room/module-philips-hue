@@ -1,4 +1,4 @@
-package com.programyourhome.adventureroom.module.philipshue.model.service;
+package com.programyourhome.adventureroom.module.philipshue.service.model;
 
 import com.programyourhome.adventureroom.module.philipshue.model.resources.colors.ColorRgb;
 

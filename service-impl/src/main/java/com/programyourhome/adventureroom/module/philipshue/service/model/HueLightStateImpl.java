@@ -6,8 +6,6 @@ import com.philips.lighting.model.PHLight;
 import com.philips.lighting.model.PHLight.PHLightColorMode;
 import com.philips.lighting.model.PHLightState;
 import com.programyourhome.adventureroom.module.philipshue.model.resources.colors.ColorRgb;
-import com.programyourhome.adventureroom.module.philipshue.model.service.ColorMode;
-import com.programyourhome.adventureroom.module.philipshue.model.service.HueLightState;
 import com.programyourhome.adventureroom.module.philipshue.service.util.ValueUtil;
 
 /**

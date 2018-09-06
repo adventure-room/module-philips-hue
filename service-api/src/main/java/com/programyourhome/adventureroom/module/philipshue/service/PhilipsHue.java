@@ -3,9 +3,10 @@ package com.programyourhome.adventureroom.module.philipshue.service;
 import java.util.Collection;
 import java.util.Optional;
 
-import com.programyourhome.adventureroom.module.philipshue.model.service.HueLight;
-import com.programyourhome.adventureroom.module.philipshue.model.service.SmartPlug;
-import com.programyourhome.adventureroom.module.philipshue.model.service.UpdateLightStateBuilder;
+import com.programyourhome.adventureroom.module.philipshue.service.model.HueLight;
+import com.programyourhome.adventureroom.module.philipshue.service.model.SmartPlug;
+import com.programyourhome.adventureroom.module.philipshue.service.model.UpdateLightState;
+import com.programyourhome.adventureroom.module.philipshue.service.model.UpdateLightStateBuilder;
 
 public interface PhilipsHue {
 
@@ -47,14 +48,14 @@ public interface PhilipsHue {
     /**
      * Create a new light state builder.
      */
-    public UpdateLightStateBuilder lightStateBuilder();
+    public UpdateLightStateBuilder updateLightStateBuilder();
 
     /**
      * One method for updating the light state of a light.
      * It uses the builder to define the new state of the light and apply it via the Hue Bridge.
      * This way we prevent an enormous overload of update methods for all different properties of a light state.
      */
-    public void updateLightState(int lightId, UpdateLightStateBuilder hueLightStateBuilder);
+    public void updateLightState(int lightId, UpdateLightState hueLightState);
 
     /**
      * Turn on the plug with this id.
