@@ -4,7 +4,7 @@ import com.philips.lighting.hue.sdk.utilities.PHUtilities;
 import com.philips.lighting.model.PHLight;
 import com.philips.lighting.model.PHLight.PHLightColorMode;
 import com.philips.lighting.model.PHLightState;
-import com.programyourhome.adventureroom.module.philipshue.model.resources.colors.ColorRGB;
+import com.programyourhome.adventureroom.module.philipshue.model.resources.colors.ColorRgb;
 import com.programyourhome.adventureroom.module.philipshue.service.model.Mood;
 import com.programyourhome.adventureroom.module.philipshue.service.util.ValueUtil;
 
@@ -49,7 +49,7 @@ public class PHLightStateBuilder {
         return this;
     }
 
-    public PHLightStateBuilder colorRGB(final ColorRGB color) {
+    public PHLightStateBuilder colorRGB(final ColorRgb color) {
         final float[] xy = PHUtilities.calculateXYFromRGB(color.getRed(), color.getGreen(), color.getBlue(), this.phLight.getModelNumber());
         return this.colorXY(xy[0], xy[1]);
     }
@@ -83,6 +83,11 @@ public class PHLightStateBuilder {
 
     public PHLightStateBuilder mood(final Mood mood) {
         return this.setColorTemperature(mood.getTemperature());
+    }
+
+    public PHLightStateBuilder transitionTime(final int transitionTimeMillis) {
+        this.phLightState.setTransitionTime((int) Math.round(transitionTimeMillis / 100.0));
+        return this;
     }
 
     /**

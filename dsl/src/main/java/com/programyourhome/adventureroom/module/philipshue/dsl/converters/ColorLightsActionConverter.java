@@ -5,7 +5,7 @@ import java.util.Map;
 import com.programyourhome.adventureroom.dsl.regex.MatchResult;
 import com.programyourhome.adventureroom.model.Adventure;
 import com.programyourhome.adventureroom.module.philipshue.model.ColorLightsAction;
-import com.programyourhome.adventureroom.module.philipshue.model.resources.colors.ColorRGB;
+import com.programyourhome.adventureroom.module.philipshue.model.resources.colors.ColorRgb;
 
 public class ColorLightsActionConverter extends AbstractPhilipsHueActionConverter<ColorLightsAction> {
 
@@ -20,7 +20,7 @@ public class ColorLightsActionConverter extends AbstractPhilipsHueActionConverte
     @Override
     public ColorLightsAction convert(MatchResult matchResult, Adventure adventure) {
         ColorLightsAction action = new ColorLightsAction();
-        action.color = adventure.getResource(ColorRGB.class, matchResult.getValue(COLOR_ID));
+        action.color = adventure.getResource(ColorRgb.class, matchResult.getValue(COLOR_ID));
         action.lights = this.getSingleMultipleOrAllLights(matchResult, adventure);
         return action;
     }

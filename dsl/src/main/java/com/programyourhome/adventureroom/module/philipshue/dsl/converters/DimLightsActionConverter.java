@@ -1,6 +1,7 @@
 package com.programyourhome.adventureroom.module.philipshue.dsl.converters;
 
 import java.util.Map;
+import java.util.Optional;
 
 import com.programyourhome.adventureroom.dsl.regex.MatchResult;
 import com.programyourhome.adventureroom.model.Adventure;
@@ -11,9 +12,9 @@ public class DimLightsActionConverter extends AbstractPhilipsHueActionConverter<
     @Override
     public Map<String, String> getRegexMap() {
         return this.createRegexes(
-                SINGLE, "dim light " + LIGHT_ID + " to " + INTEGER,
-                MULTIPLE, "dim lights " + LIGHT_IDS + " to " + INTEGER,
-                ALL, "dim all lights to " + INTEGER);
+                SINGLE, "dim light " + LIGHT_ID + " to " + INTEGER + this.optional(" in " + DURATION),
+                MULTIPLE, "dim lights " + LIGHT_IDS + " to " + INTEGER + this.optional(" in " + DURATION),
+                ALL, "dim all lights to " + INTEGER + this.optional(" in " + DURATION));
     }
 
     @Override
@@ -21,6 +22,7 @@ public class DimLightsActionConverter extends AbstractPhilipsHueActionConverter<
         DimLightsAction action = new DimLightsAction();
         action.basisPoints = Integer.parseInt(matchResult.getValue(INTEGER)) * 100;
         action.lights = this.getSingleMultipleOrAllLights(matchResult, adventure);
+        matchResult.getOptionalValue(DURATION).ifPresent(durationMatch -> action.transitionTime = Optional.of(this.parseDuration(durationMatch)));
         return action;
     }
 

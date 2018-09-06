@@ -2,7 +2,7 @@ package com.programyourhome.adventureroom.module.philipshue.service.model;
 
 import java.util.Arrays;
 
-public enum LightType {
+public enum HueLightType {
 
     HUE_FULL_COLOR_BULB("LCT", true, true, true, true),
     LIVING_COLORS("LLC", true, true, true, false),
@@ -15,7 +15,7 @@ public enum LightType {
     private boolean fullColor;
     private boolean moodLight;
 
-    private LightType(final String modelAbbreviation, final boolean onOffSwitch, final boolean dimmable, final boolean fullColor, final boolean moodLight) {
+    private HueLightType(final String modelAbbreviation, final boolean onOffSwitch, final boolean dimmable, final boolean fullColor, final boolean moodLight) {
         this.modelAbbreviation = modelAbbreviation;
         this.onOffSwitch = onOffSwitch;
         this.dimmable = dimmable;
@@ -43,8 +43,8 @@ public enum LightType {
         return this.moodLight;
     }
 
-    public static LightType fromModelAbbreviation(final String modelAbbreviation) {
-        return Arrays.asList(LightType.values()).stream()
+    public static HueLightType fromModelAbbreviation(final String modelAbbreviation) {
+        return Arrays.asList(HueLightType.values()).stream()
                 .filter(type -> type.getModelAbbreviation().equals(modelAbbreviation))
                 .findFirst()
                 .get();

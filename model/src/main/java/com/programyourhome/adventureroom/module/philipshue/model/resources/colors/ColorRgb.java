@@ -3,17 +3,17 @@ package com.programyourhome.adventureroom.module.philipshue.model.resources.colo
 import com.programyourhome.adventureroom.model.AbstractDescribable;
 import com.programyourhome.adventureroom.model.resource.Resource;
 
-public class ColorRGB extends AbstractDescribable implements Resource {
+public class ColorRgb extends AbstractDescribable implements Resource {
 
     private int red;
     private int green;
     private int blue;
 
     @SuppressWarnings("unused")
-    private ColorRGB() {
+    private ColorRgb() {
     }
 
-    public ColorRGB(int red, int green, int blue) {
+    public ColorRgb(int red, int green, int blue) {
         this.red = red;
         this.green = green;
         this.blue = blue;

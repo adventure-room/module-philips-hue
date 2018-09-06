@@ -1,6 +1,9 @@
 package com.programyourhome.adventureroom.module.philipshue.service;
 
+import static com.programyourhome.adventureroom.module.philipshue.service.model.UpdateLightStateBuilderImpl.NO_VALUE;
+
 import java.util.Collection;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import com.philips.lighting.hue.sdk.PHAccessPoint;
@@ -8,13 +11,17 @@ import com.philips.lighting.hue.sdk.PHHueSDK;
 import com.philips.lighting.model.PHBridge;
 import com.philips.lighting.model.PHBridgeResourcesCache;
 import com.philips.lighting.model.PHLight;
-import com.programyourhome.adventureroom.module.philipshue.model.resources.colors.ColorRGB;
+import com.programyourhome.adventureroom.module.philipshue.service.model.ColorMode;
 import com.programyourhome.adventureroom.module.philipshue.service.model.HueLight;
 import com.programyourhome.adventureroom.module.philipshue.service.model.HueLightImpl;
-import com.programyourhome.adventureroom.module.philipshue.service.model.LightType;
-import com.programyourhome.adventureroom.module.philipshue.service.model.Mood;
+import com.programyourhome.adventureroom.module.philipshue.service.model.HueLightType;
 import com.programyourhome.adventureroom.module.philipshue.service.model.SmartPlug;
 import com.programyourhome.adventureroom.module.philipshue.service.model.SmartPlugImpl;
+import com.programyourhome.adventureroom.module.philipshue.service.model.UpdateLightState;
+import com.programyourhome.adventureroom.module.philipshue.service.model.UpdateLightStateBuilder;
+import com.programyourhome.adventureroom.module.philipshue.service.model.UpdateLightStateBuilderImpl;
+
+import one.util.streamex.StreamEx;
 
 public class PhilipsHueImpl implements PhilipsHue {
 
@@ -31,8 +38,8 @@ public class PhilipsHueImpl implements PhilipsHue {
         this.accessPoint.setIpAddress(host);
         this.accessPoint.setUsername(username);
 
-        this.sdk.setAppName("Adventure Roome");
-        this.sdk.setDeviceName("Adventure Roome- Philips Hue Module");
+        this.sdk.setAppName("Adventure Room");
+        this.sdk.setDeviceName("Adventure Room- Philips Hue Module");
         this.sdk.getNotificationManager().registerSDKListener(this.sdkListener);
 
         this.sdk.connect(this.accessPoint);
@@ -53,32 +60,35 @@ public class PhilipsHueImpl implements PhilipsHue {
 
     @Override
     public Collection<HueLight> getLights() {
-        return this.getAllLights().stream()
-                .filter(light -> light.getType() != LightType.LIVING_WHITES_PLUG)
+        return this.getAllHueLights().stream()
+                .filter(light -> light.getType() != HueLightType.LIVING_WHITES_PLUG)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public HueLight getLight(final int lightId) {
-        return new HueLightImpl(this.getPHLight(lightId));
+    public Optional<HueLight> getLight(final int lightId) {
+        return StreamEx.of(this.getLights())
+                .filter(light -> light.getId() == lightId)
+                .findFirst();
     }
 
     @Override
     public Collection<SmartPlug> getPlugs() {
-        return this.getAllLights().stream()
-                .filter(light -> light.getType() != LightType.LIVING_WHITES_PLUG)
+        return this.getAllHueLights().stream()
+                .filter(light -> light.getType() == HueLightType.LIVING_WHITES_PLUG)
                 .map(SmartPlugImpl::new)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public void turnOnLight(final int lightId) {
-        this.switchLight(lightId, true);
+    public Optional<SmartPlug> getPlug(int plugId) {
+        return StreamEx.of(this.getPlugs())
+                .filter(plug -> plug.getId() == plugId)
+                .findFirst();
     }
 
-    @Override
-    public void turnOffLight(final int lightId) {
-        this.switchLight(lightId, false);
+    private void switchLight(final int lightId, final boolean on) {
+        this.applyNewState(new PHLightStateBuilder(this.getPHLight(lightId), on));
     }
 
     @Override
@@ -91,7 +101,12 @@ public class PhilipsHueImpl implements PhilipsHue {
         this.switchLight(plugId, false);
     }
 
-    private PHLightStateBuilder createBuilder(final int lightId) {
+    @Override
+    public UpdateLightStateBuilder lightStateBuilder(int lightId) {
+        return new UpdateLightStateBuilderImpl(lightId);
+    }
+
+    private PHLightStateBuilder createPhBuilder(int lightId) {
         return new PHLightStateBuilder(this.getPHLight(lightId));
     }
 
@@ -100,74 +115,31 @@ public class PhilipsHueImpl implements PhilipsHue {
     }
 
     @Override
-    public void dim(final int lightId, final int dimBasisPoints) {
-        this.applyNewState(this.createBuilder(lightId)
-                .dim(dimBasisPoints));
-    }
-
-    @Override
-    public void setColorRGB(final int lightId, final ColorRGB color) {
-        this.applyNewState(this.createBuilder(lightId)
-                .colorRGB(color));
-    }
-
-    @Override
-    public void setMood(final int lightId, final Mood mood) {
-        this.applyNewState(this.createBuilder(lightId)
-                .mood(mood));
-    }
-
-    @Override
-    public void setColorXY(final int lightId, final float x, final float y) {
-        this.applyNewState(this.createBuilder(lightId)
-                .colorXY(x, y));
-    }
-
-    @Override
-    public void setColorHueSaturation(final int lightId, final int hueBasisPoints, final int saturationBasisPoints) {
-        this.applyNewState(this.createBuilder(lightId)
-                .colorHueSaturation(hueBasisPoints, saturationBasisPoints));
-    }
-
-    @Override
-    public void setColorTemperature(final int lightId, final int temperatureBasisPoints) {
-        this.applyNewState(this.createBuilder(lightId)
-                .colorTemperature(temperatureBasisPoints));
-    }
-
-    @Override
-    public void dimToColorRGB(final int lightId, final int dimBasisPoints, final ColorRGB color) {
-        this.applyNewState(this.createBuilder(lightId)
-                .dim(dimBasisPoints)
-                .colorRGB(color));
-    }
-
-    @Override
-    public void dimToColorXY(final int lightId, final int dimBasisPoints, final float x, final float y) {
-        this.applyNewState(this.createBuilder(lightId)
-                .dim(dimBasisPoints)
-                .colorXY(x, y));
-    }
-
-    @Override
-    public void dimToColorHueSaturation(final int lightId, final int dimBasisPoints, final int hueBasisPoints, final int saturationBasisPoints) {
-        this.applyNewState(this.createBuilder(lightId)
-                .dim(dimBasisPoints)
-                .colorHueSaturation(hueBasisPoints, saturationBasisPoints));
-    }
-
-    @Override
-    public void dimToColorTemperature(final int lightId, final int dimBasisPoints, final int temperatureBasisPoints) {
-        this.applyNewState(this.createBuilder(lightId)
-                .dim(dimBasisPoints)
-                .colorTemperature(temperatureBasisPoints));
-    }
-
-    @Override
-    public void dimToMood(final int lightId, final int dimBasisPoints, final Mood mood) {
-        this.applyNewState(this.createBuilder(lightId)
-                .dim(dimBasisPoints)
-                .mood(mood));
+    public void updateLightState(UpdateLightStateBuilder hueLightStateBuilder) {
+        UpdateLightState updateLightState = hueLightStateBuilder.build();
+        PHLightStateBuilder phBuilder;
+        HueLight newState = updateLightState.getNewState();
+        if (!newState.isOn()) {
+            phBuilder = new PHLightStateBuilder(this.getPHLight(newState.getId()), false);
+        } else {
+            phBuilder = this.createPhBuilder(newState.getId());
+            if (newState.getDim() != NO_VALUE) {
+                phBuilder.dim(newState.getDim());
+            }
+            if (newState.getColorMode() == ColorMode.RGB) {
+                phBuilder.colorRGB(newState.getColorRgb());
+            }
+            if (newState.getColorMode() == ColorMode.HUE_SATURATION) {
+                phBuilder.colorHueSaturation(newState.getHue(), newState.getSaturation());
+            }
+            if (newState.getColorMode() == ColorMode.TEMPERATURE) {
+                phBuilder.colorTemperature(newState.getColorTemperature());
+            }
+            if (updateLightState.getTransitionTime() != NO_VALUE) {
+                phBuilder.transitionTime(updateLightState.getTransitionTime());
+            }
+        }
+        this.applyNewState(phBuilder);
     }
 
     private PHBridge getBridge() {
@@ -185,14 +157,10 @@ public class PhilipsHueImpl implements PhilipsHue {
                 .get();
     }
 
-    private Collection<HueLight> getAllLights() {
-        return this.getCache().getAllLights().stream()
+    private Collection<? extends HueLight> getAllHueLights() {
+        return StreamEx.of(this.getCache().getAllLights())
                 .map(HueLightImpl::new)
-                .collect(Collectors.toList());
-    }
-
-    private void switchLight(final int lightId, final boolean on) {
-        this.applyNewState(new PHLightStateBuilder(this.getPHLight(lightId), on));
+                .toList();
     }
 
 }

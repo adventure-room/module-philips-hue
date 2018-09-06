@@ -11,7 +11,7 @@ import com.programyourhome.adventureroom.model.resource.ResourceDescriptor;
 import com.programyourhome.adventureroom.module.philipshue.dsl.converters.ColorLightsActionConverter;
 import com.programyourhome.adventureroom.module.philipshue.dsl.converters.DimLightsActionConverter;
 import com.programyourhome.adventureroom.module.philipshue.dsl.converters.TurnOffLightsActionConverter;
-import com.programyourhome.adventureroom.module.philipshue.model.resources.colors.ColorRGB;
+import com.programyourhome.adventureroom.module.philipshue.model.resources.colors.ColorRgb;
 import com.programyourhome.adventureroom.module.philipshue.model.resources.lights.Light;
 import com.programyourhome.adventureroom.module.philipshue.model.resources.plugs.Plug;
 import com.programyourhome.adventureroom.module.philipshue.service.PhilipsHue;
@@ -47,10 +47,10 @@ public class PhilipsHueAdventureModule extends AbstractRegexDslAdventureModule {
         plugsDescriptor.clazz = Plug.class;
         this.config.addResourceDescriptor(plugsDescriptor);
 
-        ResourceDescriptor<ColorRGB> colorsDescriptor = new ResourceDescriptor<>();
+        ResourceDescriptor<ColorRgb> colorsDescriptor = new ResourceDescriptor<>();
         colorsDescriptor.id = "colors";
         colorsDescriptor.name = "RGB Colors";
-        colorsDescriptor.clazz = ColorRGB.class;
+        colorsDescriptor.clazz = ColorRgb.class;
         this.config.addResourceDescriptor(colorsDescriptor);
 
         this.config.addTask("Hue SDK", () -> this.philipsHue.connectToBridge(this.config.bridgeHost, this.config.bridgeUsername));
