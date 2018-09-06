@@ -12,7 +12,7 @@ public class DimLightsActionExecutor extends AbstractPhilipsHueExecutor<DimLight
     public void execute(DimLightsAction action, ExecutionContext context) {
         PhilipsHue philipsHue = this.getPhilipsHue(context);
         int transitionTime = action.transitionTime.map(Duration::toMillis).orElse(0L).intValue();// TODO: get default from context
-        action.lights.forEach(light -> philipsHue.updateLightState(philipsHue.lightStateBuilder(light.idInBridge)
+        action.lights.forEach(light -> philipsHue.updateLightState(light.idInBridge, philipsHue.lightStateBuilder()
                 .dim(action.basisPoints)
                 .transitionTime(transitionTime)));
         try {

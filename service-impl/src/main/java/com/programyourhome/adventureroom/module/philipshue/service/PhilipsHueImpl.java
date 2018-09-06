@@ -11,14 +11,15 @@ import com.philips.lighting.hue.sdk.PHHueSDK;
 import com.philips.lighting.model.PHBridge;
 import com.philips.lighting.model.PHBridgeResourcesCache;
 import com.philips.lighting.model.PHLight;
-import com.programyourhome.adventureroom.module.philipshue.service.model.ColorMode;
-import com.programyourhome.adventureroom.module.philipshue.service.model.HueLight;
+import com.programyourhome.adventureroom.module.philipshue.model.service.ColorMode;
+import com.programyourhome.adventureroom.module.philipshue.model.service.HueLight;
+import com.programyourhome.adventureroom.module.philipshue.model.service.HueLightState;
+import com.programyourhome.adventureroom.module.philipshue.model.service.HueLightType;
+import com.programyourhome.adventureroom.module.philipshue.model.service.SmartPlug;
+import com.programyourhome.adventureroom.module.philipshue.model.service.UpdateLightState;
+import com.programyourhome.adventureroom.module.philipshue.model.service.UpdateLightStateBuilder;
 import com.programyourhome.adventureroom.module.philipshue.service.model.HueLightImpl;
-import com.programyourhome.adventureroom.module.philipshue.service.model.HueLightType;
-import com.programyourhome.adventureroom.module.philipshue.service.model.SmartPlug;
 import com.programyourhome.adventureroom.module.philipshue.service.model.SmartPlugImpl;
-import com.programyourhome.adventureroom.module.philipshue.service.model.UpdateLightState;
-import com.programyourhome.adventureroom.module.philipshue.service.model.UpdateLightStateBuilder;
 import com.programyourhome.adventureroom.module.philipshue.service.model.UpdateLightStateBuilderImpl;
 
 import one.util.streamex.StreamEx;
@@ -102,8 +103,8 @@ public class PhilipsHueImpl implements PhilipsHue {
     }
 
     @Override
-    public UpdateLightStateBuilder lightStateBuilder(int lightId) {
-        return new UpdateLightStateBuilderImpl(lightId);
+    public UpdateLightStateBuilder lightStateBuilder() {
+        return new UpdateLightStateBuilderImpl();
     }
 
     private PHLightStateBuilder createPhBuilder(int lightId) {
@@ -115,14 +116,14 @@ public class PhilipsHueImpl implements PhilipsHue {
     }
 
     @Override
-    public void updateLightState(UpdateLightStateBuilder hueLightStateBuilder) {
+    public void updateLightState(int lightId, UpdateLightStateBuilder hueLightStateBuilder) {
         UpdateLightState updateLightState = hueLightStateBuilder.build();
         PHLightStateBuilder phBuilder;
-        HueLight newState = updateLightState.getNewState();
+        HueLightState newState = updateLightState.getNewState();
         if (!newState.isOn()) {
-            phBuilder = new PHLightStateBuilder(this.getPHLight(newState.getId()), false);
+            phBuilder = new PHLightStateBuilder(this.getPHLight(lightId), false);
         } else {
-            phBuilder = this.createPhBuilder(newState.getId());
+            phBuilder = this.createPhBuilder(lightId);
             if (newState.getDim() != NO_VALUE) {
                 phBuilder.dim(newState.getDim());
             }

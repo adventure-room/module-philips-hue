@@ -9,7 +9,7 @@ public class TurnOffLightsActionExecutor extends AbstractPhilipsHueExecutor<Turn
     @Override
     public void execute(TurnOffLightsAction action, ExecutionContext context) {
         PhilipsHue philipsHue = this.getPhilipsHue(context);
-        action.lights.forEach(light -> philipsHue.updateLightState(philipsHue.lightStateBuilder(light.idInBridge).off()));
+        action.lights.forEach(light -> philipsHue.updateLightState(light.idInBridge, philipsHue.lightStateBuilder().off()));
     }
 
 }

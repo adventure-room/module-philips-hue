@@ -1,7 +1,10 @@
 package com.programyourhome.adventureroom.module.philipshue.service.model;
 
 import com.programyourhome.adventureroom.module.philipshue.model.resources.colors.ColorRgb;
-import com.programyourhome.adventureroom.module.philipshue.service.model.HueLightImpl.Builder;
+import com.programyourhome.adventureroom.module.philipshue.model.service.Mood;
+import com.programyourhome.adventureroom.module.philipshue.model.service.UpdateLightState;
+import com.programyourhome.adventureroom.module.philipshue.model.service.UpdateLightStateBuilder;
+import com.programyourhome.adventureroom.module.philipshue.service.model.HueLightStateImpl.Builder;
 import com.programyourhome.adventureroom.module.philipshue.service.util.ValueUtil;
 
 public class UpdateLightStateBuilderImpl implements UpdateLightStateBuilder {
@@ -11,8 +14,8 @@ public class UpdateLightStateBuilderImpl implements UpdateLightStateBuilder {
     private final Builder lightBuilder;
     private int transitionTime;
 
-    public UpdateLightStateBuilderImpl(int lightId) {
-        this.lightBuilder = new Builder(lightId)
+    public UpdateLightStateBuilderImpl() {
+        this.lightBuilder = new Builder()
                 .dim(NO_VALUE);
         this.transitionTime = NO_VALUE;
     }

@@ -9,7 +9,7 @@ public class ColorLightsActionExecutor extends AbstractPhilipsHueExecutor<ColorL
     @Override
     public void execute(ColorLightsAction action, ExecutionContext context) {
         PhilipsHue philipsHue = this.getPhilipsHue(context);
-        action.lights.forEach(light -> philipsHue.updateLightState(philipsHue.lightStateBuilder(light.idInBridge).colorRgb(action.color)));
+        action.lights.forEach(light -> philipsHue.updateLightState(light.idInBridge, philipsHue.lightStateBuilder().colorRgb(action.color)));
     }
 
 }

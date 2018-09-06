@@ -4,17 +4,17 @@ import com.philips.lighting.hue.sdk.utilities.PHUtilities;
 import com.philips.lighting.hue.sdk.utilities.impl.Color;
 import com.philips.lighting.model.PHLight;
 import com.philips.lighting.model.PHLight.PHLightColorMode;
+import com.philips.lighting.model.PHLightState;
 import com.programyourhome.adventureroom.module.philipshue.model.resources.colors.ColorRgb;
+import com.programyourhome.adventureroom.module.philipshue.model.service.ColorMode;
+import com.programyourhome.adventureroom.module.philipshue.model.service.HueLightState;
 import com.programyourhome.adventureroom.module.philipshue.service.util.ValueUtil;
 
 /**
  * For more details on the meaning of the properties, see the UpdateLightStateBuilder class.
  */
-public class HueLightStateImpl implements HueLight {
+public class HueLightStateImpl implements HueLightState {
 
-    private int id;
-    private String name;
-    private HueLightType type;
     private boolean on;
     private Integer dim;
     private ColorMode colorMode;
@@ -27,23 +27,21 @@ public class HueLightStateImpl implements HueLight {
     }
 
     public HueLightStateImpl(final PHLight phLight) {
-        this.id = Integer.parseInt(phLight.getIdentifier());
-        this.name = phLight.getName();
-        this.type = HueLightType.fromModelAbbreviation(phLight.getModelNumber().substring(0, 3));
-        this.on = phLight.getLastKnownLightState().isOn();
-        this.dim = phLight.getLastKnownLightState().getBrightness() == null ? null
-                : ValueUtil.brightnessToBasisPoints(phLight.getLastKnownLightState().getBrightness());
-        this.colorMode = this.fromPhColorMode(phLight.getLastKnownLightState().getColorMode());
+        PHLightState phLightState = phLight.getLastKnownLightState();
+        this.on = phLightState.isOn();
+        this.dim = phLightState.getBrightness() == null ? null
+                : ValueUtil.brightnessToBasisPoints(phLightState.getBrightness());
+        this.colorMode = this.fromPhColorMode(phLightState.getColorMode());
         if (this.colorMode != ColorMode.NONE) {
-            this.hue = phLight.getLastKnownLightState().getHue() == null ? null : ValueUtil.hueToBasisPoints(phLight.getLastKnownLightState().getHue());
-            this.saturation = phLight.getLastKnownLightState().getSaturation() == null ? null
-                    : ValueUtil.saturationToBasisPoints(phLight.getLastKnownLightState().getSaturation());
-            this.colorTemperature = phLight.getLastKnownLightState().getCt() == null ? null
-                    : ValueUtil.colorTemperatureToBasisPoints(phLight.getLastKnownLightState().getCt());
-            if (phLight.getLastKnownLightState().getX() != null && phLight.getLastKnownLightState().getY() != null) {
+            this.hue = phLightState.getHue() == null ? null : ValueUtil.hueToBasisPoints(phLightState.getHue());
+            this.saturation = phLightState.getSaturation() == null ? null
+                    : ValueUtil.saturationToBasisPoints(phLightState.getSaturation());
+            this.colorTemperature = phLightState.getCt() == null ? null
+                    : ValueUtil.colorTemperatureToBasisPoints(phLightState.getCt());
+            if (phLightState.getX() != null && phLightState.getY() != null) {
                 final float[] points = new float[2];
-                points[0] = phLight.getLastKnownLightState().getX();
-                points[1] = phLight.getLastKnownLightState().getY();
+                points[0] = phLightState.getX();
+                points[1] = phLightState.getY();
                 int philipsHueColor = PHUtilities.colorFromXY(points, phLight.getModelNumber());
                 this.colorRgb = new ColorRgb(Color.red(philipsHueColor), Color.green(philipsHueColor), Color.blue(philipsHueColor));
             }
@@ -60,21 +58,6 @@ public class HueLightStateImpl implements HueLight {
             colorMode = ColorMode.TEMPERATURE;
         }
         return colorMode;
-    }
-
-    @Override
-    public int getId() {
-        return this.id;
-    }
-
-    @Override
-    public String getName() {
-        return this.name;
-    }
-
-    @Override
-    public HueLightType getType() {
-        return this.type;
     }
 
     @Override
@@ -112,77 +95,63 @@ public class HueLightStateImpl implements HueLight {
         return this.colorRgb;
     }
 
-    public static Builder builder(int lightId) {
-        return new Builder(lightId);
+    public static Builder builder() {
+        return new Builder();
     }
 
     public static class Builder {
-        private final HueLightStateImpl hueLight;
+        private final HueLightStateImpl hueLightState;
 
-        public Builder(int lightId) {
-            this.hueLight = new HueLightStateImpl();
-            this.hueLight.id = lightId;
-            this.hueLight.colorMode = ColorMode.NONE;
-        }
-
-        public Builder name(String name) {
-            this.hueLight.name = name;
-            return this;
-        }
-
-        public Builder type(HueLightType type) {
-            if (type == HueLightType.LIVING_WHITES_PLUG) {
-                throw new IllegalArgumentException("Light cannot be of type plug");
-            }
-            this.hueLight.type = type;
-            return this;
+        public Builder() {
+            this.hueLightState = new HueLightStateImpl();
+            this.hueLightState.colorMode = ColorMode.NONE;
         }
 
         public Builder on() {
-            this.hueLight.on = true;
+            this.hueLightState.on = true;
             return this;
         }
 
         public Builder off() {
-            this.hueLight.on = false;
+            this.hueLightState.on = false;
             return this;
         }
 
         public Builder setOn(boolean on) {
-            this.hueLight.on = on;
+            this.hueLightState.on = on;
             return this;
         }
 
         public Builder dim(int dim) {
-            this.hueLight.on = true;
-            this.hueLight.dim = dim;
+            this.hueLightState.on = true;
+            this.hueLightState.dim = dim;
             return this;
         }
 
         public Builder colorRgb(ColorRgb colorRgb) {
-            this.hueLight.on = true;
-            this.hueLight.colorMode = ColorMode.RGB;
-            this.hueLight.colorRgb = colorRgb;
+            this.hueLightState.on = true;
+            this.hueLightState.colorMode = ColorMode.RGB;
+            this.hueLightState.colorRgb = colorRgb;
             return this;
         }
 
         public Builder hueSaturation(int hue, int saturation) {
-            this.hueLight.on = true;
-            this.hueLight.colorMode = ColorMode.HUE_SATURATION;
-            this.hueLight.hue = hue;
-            this.hueLight.saturation = saturation;
+            this.hueLightState.on = true;
+            this.hueLightState.colorMode = ColorMode.HUE_SATURATION;
+            this.hueLightState.hue = hue;
+            this.hueLightState.saturation = saturation;
             return this;
         }
 
         public Builder colorTemperature(int colorTemperature) {
-            this.hueLight.on = true;
-            this.hueLight.colorMode = ColorMode.TEMPERATURE;
-            this.hueLight.colorTemperature = colorTemperature;
+            this.hueLightState.on = true;
+            this.hueLightState.colorMode = ColorMode.TEMPERATURE;
+            this.hueLightState.colorTemperature = colorTemperature;
             return this;
         }
 
         public HueLightStateImpl build() {
-            return this.hueLight;
+            return this.hueLightState;
         }
     }
 

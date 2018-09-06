@@ -45,16 +45,16 @@ public interface PhilipsHue {
     public Optional<SmartPlug> getPlug(int plugId);
 
     /**
-     * Create a new light state builder for the given light id.
+     * Create a new light state builder.
      */
-    public UpdateLightStateBuilder lightStateBuilder(int lightId);
+    public UpdateLightStateBuilder lightStateBuilder();
 
     /**
      * One method for updating the light state of a light.
      * It uses the builder to define the new state of the light and apply it via the Hue Bridge.
      * This way we prevent an enormous overload of update methods for all different properties of a light state.
      */
-    public void updateLightState(UpdateLightStateBuilder hueLightStateBuilder);
+    public void updateLightState(int lightId, UpdateLightStateBuilder hueLightStateBuilder);
 
     /**
      * Turn on the plug with this id.

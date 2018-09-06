@@ -5,7 +5,7 @@ import com.philips.lighting.model.PHLight;
 import com.philips.lighting.model.PHLight.PHLightColorMode;
 import com.philips.lighting.model.PHLightState;
 import com.programyourhome.adventureroom.module.philipshue.model.resources.colors.ColorRgb;
-import com.programyourhome.adventureroom.module.philipshue.service.model.Mood;
+import com.programyourhome.adventureroom.module.philipshue.model.service.Mood;
 import com.programyourhome.adventureroom.module.philipshue.service.util.ValueUtil;
 
 public class PHLightStateBuilder {

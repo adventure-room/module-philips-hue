@@ -1,17 +1,20 @@
 package com.programyourhome.adventureroom.module.philipshue.service.model;
 
+import com.programyourhome.adventureroom.module.philipshue.model.service.HueLightState;
+import com.programyourhome.adventureroom.module.philipshue.model.service.UpdateLightState;
+
 public class UpdateLightStateImpl implements UpdateLightState {
 
-    private final HueLight newState;
+    private final HueLightState newState;
     private final int transitionTime;
 
-    public UpdateLightStateImpl(HueLight newState, int transitionTime) {
+    public UpdateLightStateImpl(HueLightState newState, int transitionTime) {
         this.newState = newState;
         this.transitionTime = transitionTime;
     }
 
     @Override
-    public HueLight getNewState() {
+    public HueLightState getNewState() {
         return this.newState;
     }
 

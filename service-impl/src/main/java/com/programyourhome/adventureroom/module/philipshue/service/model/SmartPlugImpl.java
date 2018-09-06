@@ -1,7 +1,7 @@
 package com.programyourhome.adventureroom.module.philipshue.service.model;
 
-import com.programyourhome.adventureroom.module.philipshue.service.model.HueLight;
-import com.programyourhome.adventureroom.module.philipshue.service.model.SmartPlug;
+import com.programyourhome.adventureroom.module.philipshue.model.service.HueLight;
+import com.programyourhome.adventureroom.module.philipshue.model.service.SmartPlug;
 
 public class SmartPlugImpl implements SmartPlug {
 
