@@ -3,9 +3,9 @@ package com.programyourhome.adventureroom.module.philipshue.service;
 import java.util.Collection;
 import java.util.Optional;
 
-import com.programyourhome.adventureroom.module.philipshue.service.model.HueLight;
-import com.programyourhome.adventureroom.module.philipshue.service.model.SmartPlug;
-import com.programyourhome.adventureroom.module.philipshue.service.model.UpdateLightStateBuilder;
+import com.programyourhome.adventureroom.module.philipshue.model.service.HueLight;
+import com.programyourhome.adventureroom.module.philipshue.model.service.SmartPlug;
+import com.programyourhome.adventureroom.module.philipshue.model.service.UpdateLightStateBuilder;
 
 public interface PhilipsHue {
 

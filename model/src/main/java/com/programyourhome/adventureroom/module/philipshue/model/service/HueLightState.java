@@ -1,29 +1,14 @@
-package com.programyourhome.adventureroom.module.philipshue.service.model;
+package com.programyourhome.adventureroom.module.philipshue.model.service;
 
 import com.programyourhome.adventureroom.module.philipshue.model.resources.colors.ColorRgb;
 
 /**
- * The Hue Light interface defines the properties you can get from a Hue Light.
+ * The Hue Light State interface defines the dynamic properties of a Hue Light.
  * For more details on the meaning of these properties, see the HueLightStateBuilder class.
  * NB: The color mode defines which values are relevant for the light color!
  * If the color more is NONE, that means this light does not support colors.
  */
-public interface HueLight {
-
-    /**
-     * The id of the light.
-     */
-    public int getId();
-
-    /**
-     * The name of the light. Must be unique.
-     */
-    public String getName();
-
-    /**
-     * The type of the light, e.g. full color hue, lux, etc.
-     */
-    public HueLightType getType();
+public interface HueLightState {
 
     /**
      * Whether or not the light is on.
