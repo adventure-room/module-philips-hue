@@ -2,11 +2,12 @@ package com.programyourhome.adventureroom.module.philipshue.executor;
 
 import java.time.Duration;
 
+import com.programyourhome.adventureroom.model.execution.ExecutionContext;
 import com.programyourhome.adventureroom.module.philipshue.model.UpdateLightsAction;
+import com.programyourhome.adventureroom.module.philipshue.module.PhilipsHueAdventureModule;
 import com.programyourhome.adventureroom.module.philipshue.service.PhilipsHue;
 import com.programyourhome.adventureroom.module.philipshue.service.model.UpdateLightState;
 import com.programyourhome.adventureroom.module.philipshue.service.model.UpdateLightStateBuilder;
-import com.programyourhome.iotadventure.runner.context.ExecutionContext;
 
 public class UpdateLightsActionExecutor extends AbstractPhilipsHueExecutor<UpdateLightsAction> {
 
@@ -16,8 +17,8 @@ public class UpdateLightsActionExecutor extends AbstractPhilipsHueExecutor<Updat
         UpdateLightStateBuilder builder = philipsHue.updateLightStateBuilder();
         action.dim.ifPresent(builder::dim);
         action.color.ifPresent(builder::colorRgb);
-        // TODO: get default from context
-        int transitionTime = action.transitionTime.map(Duration::toMillis).orElse(0L).intValue();
+        int defaultTransitionTime = context.getPropertyValue(PhilipsHueAdventureModule.DEFAULT_TRANSITION_TIME_PROPERTY_NAME);
+        int transitionTime = action.transitionTime.map(Duration::toMillis).map(Long::intValue).orElse(defaultTransitionTime).intValue();
         builder.transitionTime(transitionTime);
 
         UpdateLightState updateLightState = builder.build();

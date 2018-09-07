@@ -1,8 +1,8 @@
 package com.programyourhome.adventureroom.module.philipshue.executor;
 
+import com.programyourhome.adventureroom.model.execution.ExecutionContext;
 import com.programyourhome.adventureroom.module.philipshue.model.TurnOffLightsAction;
 import com.programyourhome.adventureroom.module.philipshue.service.PhilipsHue;
-import com.programyourhome.iotadventure.runner.context.ExecutionContext;
 
 public class TurnOffLightsActionExecutor extends AbstractPhilipsHueExecutor<TurnOffLightsAction> {
 

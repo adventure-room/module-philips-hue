@@ -6,5 +6,6 @@ public class PhilipsHueConfig extends ModuleConfig {
 
     public String bridgeHost;
     public String bridgeUsername;
+    public int defaultTransitionTimeMillis;
 
 }

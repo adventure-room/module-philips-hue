@@ -2,11 +2,11 @@ package com.programyourhome.adventureroom.module.philipshue.module;
 
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.ServiceLoader;
 
 import com.programyourhome.adventureroom.dsl.regex.AbstractRegexDslAdventureModule;
 import com.programyourhome.adventureroom.dsl.regex.RegexActionConverter;
 import com.programyourhome.adventureroom.model.Adventure;
+import com.programyourhome.adventureroom.model.execution.ExecutionContext;
 import com.programyourhome.adventureroom.model.resource.ResourceDescriptor;
 import com.programyourhome.adventureroom.module.philipshue.dsl.converters.TurnOffLightsActionConverter;
 import com.programyourhome.adventureroom.module.philipshue.dsl.converters.UpdateColorLightsActionConverter;
@@ -19,13 +19,13 @@ import com.programyourhome.adventureroom.module.philipshue.service.PhilipsHue;
 public class PhilipsHueAdventureModule extends AbstractRegexDslAdventureModule {
 
     public static final String ID = "philipshue";
+    public static final String DEFAULT_TRANSITION_TIME_PROPERTY_NAME = "default-transition-time";
 
-    private PhilipsHue philipsHue;
+    private final PhilipsHue philipsHue;
     private PhilipsHueConfig config;
 
     public PhilipsHueAdventureModule() {
-        // We assume there will be one implementation available on the classpath. If not, behavior is undefined.
-        ServiceLoader.load(PhilipsHue.class).forEach(impl -> this.philipsHue = impl);
+        this.philipsHue = this.loadApiImpl(PhilipsHue.class);
         this.initConfig();
     }
 
@@ -57,8 +57,8 @@ public class PhilipsHueAdventureModule extends AbstractRegexDslAdventureModule {
     }
 
     @Override
-    public void start(Adventure adventure) {
-        // No start actions needed.
+    public void start(Adventure adventure, ExecutionContext context) {
+        context.setPropertyValue(DEFAULT_TRANSITION_TIME_PROPERTY_NAME, this.config.defaultTransitionTimeMillis);
     }
 
     public PhilipsHue getPhilipsHue() {
@@ -78,7 +78,7 @@ public class PhilipsHueAdventureModule extends AbstractRegexDslAdventureModule {
     }
 
     @Override
-    public void stop(Adventure adventure) {
+    public void stop(Adventure adventure, ExecutionContext context) {
         this.philipsHue.disconnectFromBridge();
     }
 
