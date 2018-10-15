@@ -12,4 +12,10 @@ public class TurnOffLightsActionExecutor extends AbstractPhilipsHueExecutor<Turn
         action.lights.forEach(light -> philipsHue.updateLightState(light.idInBridge, philipsHue.updateLightStateBuilder().off().build()));
     }
 
+    @Override
+    public void stop(ExecutionContext context) {
+        // No stop action (yet), cause stopping has no explicit transition time.
+        // Should be added though and then stop should stop at current intensity
+    }
+
 }
